@@ -1,0 +1,18 @@
+{
+  "name": "react-native-ringer-mode",
+  "version": "1.0.0",
+  "description": "React Native getRingerMode, gets the ring mode of the device, Works for Android only.",
+  "main": "RingerMode.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react-native"
+  ],
+  "author": "Reyhan Ünal",
+  "license": "GPL",
+  "peerDependencies": {
+    "react-native": "^0.41.2",
+    "react-native-windows": "0.41.0-rc.1"
+  }
+}
