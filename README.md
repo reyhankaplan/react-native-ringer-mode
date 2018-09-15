@@ -18,7 +18,6 @@ import RingerMode from 'react-native-ringer-mode';
 // resolves the ringer mode as a string of the android device
 // "NORMAL" || "SILENT" || "VIBRATE"
 // RINGER_MODE_NORMAL, RINGER_MODE_SILENT, RINGER_MODE_VIBRATE
-// rejects "DEFAULT"
 
 // Get the value like this
 var mode = await RingerMode.getRingerMode();
