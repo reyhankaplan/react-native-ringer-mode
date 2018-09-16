@@ -4,7 +4,7 @@
 
 ### Install with git
 
-`$ npm install git+... --save`
+`$ npm install react-native-ringer-mode --save`
 
 ### Link
 
@@ -30,3 +30,4 @@ RingerMode.getRingerMode()
 
 ```
 [Example code](https://github.com/ryhnnl/rn-experimental/blob/65e4fa039567f8d5f375e27bd077f2f47f9c2613/src/screens/RingerModeExp.js#L47)
+  
