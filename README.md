@@ -2,7 +2,7 @@
 
 ## Getting started
 
-### Install with git
+### Install
 
 `$ npm install react-native-ringer-mode --save`
 
