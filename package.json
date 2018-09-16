@@ -1,15 +1,29 @@
 {
   "name": "react-native-ringer-mode",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React Native getRingerMode, gets the ring mode of the device, Works for Android only.",
   "main": "RingerMode.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "react-native"
+    "react-native",
+    "ringer-mode",
+    "android",
+    "silent",
+    "vibrate"
   ],
-  "author": "Reyhan Ünal",
+  "homepage": "https://github.com/ryhnnl/react-native-ringer-mode",
+  "bugs": "https://github.com/ryhnnl/react-native-ringer-mode/issues",
+  "repository": {
+  	"type": "git",
+  	"url": "https://github.com/ryhnnl/react-native-ringer-mode.git"
+  },
+  "author": {
+  	"name": "Reyhan Ünal",
+  	"email": "rryhn.96@gmail.com",
+  	"url": "https://github.com/ryhnnl"
+  },
   "license": "GPL",
   "peerDependencies": {
     "react-native": "^0.41.2",
