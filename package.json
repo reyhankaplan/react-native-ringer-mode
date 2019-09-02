@@ -1,6 +1,6 @@
 {
   "name": "react-native-ringer-mode",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "React Native getRingerMode, gets the ring mode of the device, Works for Android only.",
   "main": "RingerMode.js",
   "scripts": {
