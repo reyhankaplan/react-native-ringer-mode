@@ -47,4 +47,37 @@ public class RNRingerMode extends ReactContextBaseJavaModule {
 				break;
 		}
 	}
+
+	@ReactMethod
+	public void setRingerMode(int mode, Promise promise) {
+		switch(mode) {
+			case AudioManager.RINGER_MODE_SILENT:
+				try {
+					am.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+					promise.resolve(AudioManager.RINGER_MODE_SILENT);
+				} catch(Exception e) {
+					promise.reject(e);
+				} finally{
+					break;
+				}
+			case AudioManager.RINGER_MODE_NORMAL:
+				try {
+					am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+					promise.resolve(AudioManager.RINGER_MODE_NORMAL);
+				} catch(Exception e) {
+					promise.reject(e);
+				} finally{
+					break;
+				}
+			case AudioManager.RINGER_MODE_VIBRATE:
+				try {
+					am.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
+					promise.resolve(AudioManager.RINGER_MODE_VIBRATE);
+				} catch(Exception e) {
+					promise.reject(e);
+				} finally{
+					break;
+				}
+		}
+	}
 }
