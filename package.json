@@ -1,32 +1,152 @@
 {
   "name": "react-native-ringer-mode",
   "version": "1.1.0",
-  "description": "React Native getRingerMode, gets the ring mode of the device, Works for Android only.",
-  "main": "RingerMode.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "description": "React Native Ringer Mode - Get and set ringer mode on Android devices.",
   "keywords": [
     "react-native",
-    "ringer-mode",
     "android",
+    "ringer",
+    "ringer-mode",
     "silent",
-    "vibrate"
+    "vibrate",
+    "normal",
+    "dnd"
   ],
-  "homepage": "https://github.com/ryhnnl/react-native-ringer-mode",
-  "bugs": "https://github.com/ryhnnl/react-native-ringer-mode/issues",
-  "repository": {
-  	"type": "git",
-  	"url": "https://github.com/ryhnnl/react-native-ringer-mode.git"
+  "homepage": "https://github.com/ryhnnl/react-native-ringer-mode#readme",
+  "bugs": {
+    "url": "https://github.com/ryhnnl/react-native-ringer-mode/issues"
   },
-  "author": {
-  	"name": "Reyhan Ünal",
-  	"email": "rryhn.96@gmail.com",
-  	"url": "https://github.com/ryhnnl"
+  "repository": "https://github.com/ryhnnl/react-native-ringer-mode",
+  "license": "MIT",
+  "author": "Reyhan Unal <me@reyhan.dev> (https://reyhan.dev)",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "source": "src/index",
+  "types": "lib/typescript/index.d.ts",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "!ios",
+    "!cpp",
+    "!react-native-ringer-mode.podspec",
+    "!lib/typescript/example",
+    "!android/build",
+    "!ios/build",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
+  ],
+  "scripts": {
+    "bootstrap": "yarn example && yarn && yarn pods",
+    "example": "yarn --cwd example",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "pods": "cd example && pod-install --quiet",
+    "prepare": "bob build",
+    "release": "release-it",
+    "test": "jest",
+    "typescript": "tsc --noEmit"
   },
-  "license": "GPL",
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "eslintConfig": {
+    "extends": [
+      "@react-native-community",
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false
+        }
+      ]
+    },
+    "root": true
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "jest": {
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ],
+    "preset": "react-native"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^11.0.0",
+    "@react-native-community/eslint-config": "^2.0.0",
+    "@release-it/conventional-changelog": "^2.0.0",
+    "@types/jest": "^26.0.0",
+    "@types/react": "^16.9.19",
+    "@types/react-native": "0.62.13",
+    "commitlint": "^11.0.0",
+    "eslint": "^7.2.0",
+    "eslint-config-prettier": "^7.0.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "husky": "^6.0.0",
+    "jest": "^26.0.1",
+    "pod-install": "^0.1.0",
+    "prettier": "^2.0.5",
+    "react": "16.13.1",
+    "react-native": "0.63.4",
+    "react-native-builder-bob": "^0.18.0",
+    "release-it": "^14.2.2",
+    "typescript": "^4.1.3"
+  },
   "peerDependencies": {
-    "react-native": "^0.41.2",
-    "react-native-windows": "0.41.0-rc.1"
+    "react": "*",
+    "react-native": "*"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "react-native": "src/index",
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular"
+      }
+    }
   }
 }

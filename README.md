@@ -1,37 +1,185 @@
 # react-native-ringer-mode
 
-## Getting started
+React Native Ringer Mode - Get and set ringer mode on Android devices.
 
-### Install
+## Installation
 
-`$ npm install react-native-ringer-mode --save`
-
-### Link
-
-`$ react-native link react-native-ringer-mode`
+```sh
+npm install react-native-ringer-mode
+```
 
 ## Usage
 
-```javascript
-import RingerMode from 'react-native-ringer-mode';
+### How to get and set ringer mode with `useRingerMode` hook
 
-// getRingerMode is a static async function
-// resolves the ringer mode as a string of the android device
-// "NORMAL" || "SILENT" || "VIBRATE"
-// RINGER_MODE_NORMAL, RINGER_MODE_SILENT, RINGER_MODE_VIBRATE
+```js
+import React from 'react';
 
-const Modes = { SILENT: 0, VIBRATE: 1, NORMAL: 2 };
+import { View, Text, Button } from 'react-native';
+import { useRingerMode, RINGER_MODE } from 'react-native-ringer-mode';
 
-// Get the value like this
-const mode = await RingerMode.getRingerMode();
+const modeText = {
+  [RINGER_MODE.silent]: 'Silent',
+  [RINGER_MODE.normal]: 'Normal',
+  [RINGER_MODE.vibrate]: 'Vibrate',
+};
 
-// Another way to use it
-RingerMode.getRingerMode().then((mode) => {
-  console.log(mode);
-});
+export default function App() {
+  const { mode, error, setMode } = useRingerMode();
 
-// Set ringer mode
-const setMode = await RingerMode.setRingerMode(Modes.VIBRATE);
+  return (
+    <View>
+      <Text>Ringer Mode: {mode !== undefined ? modeText[mode] : null}</Text>
+
+      <View>
+        <Button title="Silent" onPress={() => setMode(RINGER_MODE.silent)} />
+        <Button title="Normal" onPress={() => setMode(RINGER_MODE.normal)} />
+        <Button title="Vibrate" onPress={() => setMode(RINGER_MODE.vibrate)} />
+      </View>
+
+      <View>
+        <Text>{error?.message}</Text>
+      </View>
+    </View>
+  );
+}
 ```
 
-[Example code](https://github.com/ryhnnl/rn-experimental/blob/65e4fa039567f8d5f375e27bd077f2f47f9c2613/src/screens/RingerModeExp.js#L47)
+### How to get ringer mode with `getRingerMode`
+
+`getRingerMode` is an async function and resolves the current ringer mode of the device.
+(Resolves `undefined` on non-Android devices.)
+
+```js
+import React, { useEffect, useState } from 'react';
+
+import { View, Text } from 'react-native';
+import {
+  RINGER_MODE,
+  getRingerMode,
+  RingerModeType,
+} from 'react-native-ringer-mode';
+
+const modeText = {
+  [RINGER_MODE.silent]: 'Silent',
+  [RINGER_MODE.normal]: 'Normal',
+  [RINGER_MODE.vibrate]: 'Vibrate',
+};
+
+export default function App() {
+  const [mode, setMode] = useState<RingerModeType | undefined>();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const currentMode = await getRingerMode();
+        setMode(currentMode);
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  }, []);
+
+  return (
+    <View>
+      <Text>Ringer Mode: {mode !== undefined ? modeText[mode] : null}</Text>
+    </View>
+  );
+}
+
+```
+
+### How to set ringer mode with `setRingerMode`
+
+`setRingerMode` is an async function that sets the given ringer mode to the device and resolves the mode if it is set.
+(Resolves `undefined` on non-Android devices.)
+
+```js
+import React from 'react';
+
+import { View, Button } from 'react-native';
+import {
+  setRingerMode,
+  RINGER_MODE,
+  RingerModeType,
+} from 'react-native-ringer-mode';
+
+export default function App() {
+  const setMode = (mode: RingerModeType) => {
+    try {
+      setRingerMode(mode);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  return (
+    <View>
+      <Button title="Silent" onPress={() => setMode(RINGER_MODE.silent)} />
+      <Button title="Normal" onPress={() => setMode(RINGER_MODE.normal)} />
+      <Button title="Vibrate" onPress={() => setMode(RINGER_MODE.vibrate)} />
+    </View>
+  );
+}
+```
+
+### Not allowed to change Do Not Disturb state `checkDndAccess` & `requestDndAccess`
+
+If you want to change the ringer mode **from Silent mode** or **to Silent mode**, you may run into the `Not allowed to change Do Not Disturb state` error. The example below checks the DND access and if user hasn't given the access opens the settings for it.
+
+First you need to add the line below to your `AndroidManifest.xml` to be able to see your app in the settings.
+
+```xml
+<uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+```
+
+And you can check and request permission before setting the ringer mode. Example code below:
+
+```js
+import React from 'react';
+import { View, Button } from 'react-native';
+
+import {
+  useRingerMode,
+  RINGER_MODE,
+  checkDndAccess,
+  requestDndAccess,
+  RingerModeType,
+} from 'react-native-ringer-mode';
+
+export default function App() {
+  const { mode, setMode } = useRingerMode();
+
+  const changeMode = async (newMode: RingerModeType) => {
+    // From N onward, ringer mode adjustments that would toggle Do Not Disturb
+    // are not allowed unless the app has been granted Do Not Disturb Access.
+    // @see https://developer.android.com/reference/android/media/AudioManager#setRingerMode(int)
+    if (newMode === RINGER_MODE.silent || mode === RINGER_MODE.silent) {
+      const hasDndAccess = await checkDndAccess();
+      if (hasDndAccess === false) {
+        // This function opens the DND settings.
+        // You can ask user to give the permission with a modal before calling this function.
+        requestDndAccess();
+        return;
+      }
+    }
+
+    setMode(newMode);
+  };
+
+  return (
+    <View>
+      <Button title="Silent" onPress={() => changeMode(RINGER_MODE.silent)} />
+      <Button title="Normal" onPress={() => changeMode(RINGER_MODE.normal)} />
+      <Button title="Vibrate" onPress={() => changeMode(RINGER_MODE.vibrate)} />
+    </View>
+  );
+}
+```
+
+## Contributing
+
+See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
+
+## License
+
+MIT
