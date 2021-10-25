@@ -1,4 +1,4 @@
-# react-native-ringer-mode
+# `react-native-ringer-mode` [![npm](https://img.shields.io/npm/v/react-native-ringer-mode)](https://www.npmjs.com/package/react-native-ringer-mode)
 
 React Native Ringer Mode - Get and set ringer mode on Android devices.
 
