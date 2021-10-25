@@ -124,6 +124,8 @@ export default function App() {
 
 ### Not allowed to change Do Not Disturb state `checkDndAccess` & `requestDndAccess`
 
+From N onward, ringer mode adjustments that would toggle Do Not Disturb are not allowed unless the app has been granted Do Not Disturb Access. See [AudioManager#setRingerMode](https://developer.android.com/reference/android/media/AudioManager#setRingerMode(int)).
+
 If you want to change the ringer mode **from Silent mode** or **to Silent mode**, you may run into the `Not allowed to change Do Not Disturb state` error. The example below checks the DND access and if user hasn't given the access opens the settings for it.
 
 First you need to add the line below to your `AndroidManifest.xml` to be able to see your app in the settings.
