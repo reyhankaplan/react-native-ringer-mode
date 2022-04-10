@@ -2,6 +2,8 @@
 
 React Native Ringer Mode - Get and set ringer mode on Android devices.
 
+> ⚠️ This package only supports Android. All functions will return `undefined` on non-Android devices. See https://github.com/reyhankaplan/react-native-ringer-mode/issues/3.
+
 ## Installation
 
 ```sh
