@@ -19,13 +19,12 @@ def safeExtGet(prop, fallback) {
 }
 
 android {
-    compileSdkVersion safeExtGet('RingerMode_compileSdkVersion', 29)
+    compileSdkVersion safeExtGet('compileSdkVersion', 33)
     defaultConfig {
-        minSdkVersion safeExtGet('RingerMode_minSdkVersion', 16)
-        targetSdkVersion safeExtGet('RingerMode_targetSdkVersion', 29)
+        minSdkVersion safeExtGet('minSdkVersion', 16)
+        targetSdkVersion safeExtGet('targetSdkVersion', 29)
         versionCode 1
         versionName "1.0"
-
     }
 
     buildTypes {
