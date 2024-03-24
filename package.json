@@ -1,6 +1,6 @@
 {
   "name": "react-native-ringer-mode",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "React Native Ringer Mode - Get and set ringer mode on Android devices.",
   "keywords": [
     "react-native",
